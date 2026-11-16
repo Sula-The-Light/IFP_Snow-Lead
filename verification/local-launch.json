@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:8767/",
+  "result": "PASS",
+  "errors": [],
+  "missing": [],
+  "csharp": {
+    "phase": "play",
+    "ammo": 11,
+    "health": 100
+  }
+}

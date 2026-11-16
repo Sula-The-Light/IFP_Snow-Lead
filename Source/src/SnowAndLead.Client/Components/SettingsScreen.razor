@@ -1,0 +1,69 @@
+@inject IJSRuntime JS
+
+<section class="scr" id="settingsScreen" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="screen-content settings-content">
+        <div class="screen-heading">
+            <h2 id="settingsTitle">НАСТРОЙКИ</h2>
+            <GameButton Id="settingsBack" Class="secondary" OnClick="OnBack">НАЗАД</GameButton>
+        </div>
+        <form class="settings-form" @onsubmit:preventDefault>
+            <div class="setting-row">
+                <label for="quality">Качество графики</label>
+                <select id="quality" @bind="_settings.Quality" @bind:after="SaveAsync">
+                    <option value="auto">Автоматически</option>
+                    <option value="low">Низкое</option>
+                    <option value="medium">Среднее</option>
+                    <option value="high">Высокое</option>
+                </select>
+            </div>
+            <div class="setting-row range-row">
+                <label for="volume">Громкость <output id="volumeValue" for="volume">@(_settings.Volume)%</output></label>
+                <input id="volume" type="range" min="0" max="100" step="5" @bind="_settings.Volume" @bind:event="oninput" @bind:after="SaveAsync" />
+            </div>
+            <div class="setting-row range-row">
+                <label for="sensitivity">Чувствительность <output id="sensitivityValue" for="sensitivity">@(_settings.Sensitivity)%</output></label>
+                <input id="sensitivity" type="range" min="50" max="200" step="10" @bind="_settings.Sensitivity" @bind:event="oninput" @bind:after="SaveAsync" />
+            </div>
+            <div class="setting-row">
+                <label for="controlsMode">Управление</label>
+                <select id="controlsMode" @bind="_settings.ControlsMode" @bind:after="SaveAsync">
+                    <option value="auto">Автоматически</option>
+                    <option value="touch">Сенсорное</option>
+                    <option value="keyboard">Клавиатура и мышь</option>
+                </select>
+            </div>
+            <div class="setting-row checkbox-row">
+                <label for="effects">Эффекты плёнки и вспышки</label>
+                <input id="effects" type="checkbox" @bind="_settings.Effects" @bind:after="SaveAsync" />
+            </div>
+        </form>
+        <p class="screen-note" role="status">@_status</p>
+    </div>
+</section>
+
+@code {
+    private GameSettings _settings = new();
+    private string _status = "Настройки сохраняются на этом устройстве.";
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    public async Task LoadSavedSettingsAsync()
+    {
+        try
+        {
+            _settings = await JS.InvokeAsync<GameSettings?>("SnowHost.getSettings") ?? new();
+            _settings.Validate();
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (JSException)
+        {
+            // Defaults remain available if the browser cannot read preferences.
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        _settings.Validate();
+        await JS.InvokeVoidAsync("SnowGame.applySettings", _settings);
+        _status = "Настройки сохранены на этом устройстве.";
+    }
+}

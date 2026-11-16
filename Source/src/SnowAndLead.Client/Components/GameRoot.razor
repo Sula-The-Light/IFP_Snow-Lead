@@ -1,0 +1,66 @@
+@inject IJSRuntime JS
+@inject GameInterop Game
+@implements IAsyncDisposable
+
+<canvas id="c" aria-label="Snow and Lead — игровой мир"></canvas>
+<div id="fx" aria-hidden="true"></div>
+<div id="hurt" aria-hidden="true"></div>
+<GameHud OnPause="Pause" OnFullscreen="Fullscreen" />
+<TouchControls />
+<div id="white" aria-hidden="true"></div>
+<MainMenu Ready="_ready" OnStart="Start" OnSettings="OpenSettings" />
+<div class="scr" id="comic" aria-label="Комикс" lang="en"></div>
+<PauseScreen OnResume="Resume" OnRestart="Restart" OnSettings="OpenSettings" OnMenu="Menu" />
+<SettingsScreen @ref="_settings" OnBack="CloseSettings" />
+<EndScreen Id="dead" TitleId="deadTitle" ButtonId="retry" ButtonText="ПОПРОБОВАТЬ СНОВА" OnAgain="Restart">
+    <Title>YOU PAID<br />THE DEBT</Title>
+    <Story>Marek Vale is down.</Story>
+</EndScreen>
+<EndScreen Id="fin" TitleId="finTitle" ButtonId="playAgain" ButtonText="ИГРАТЬ СНОВА" OnAgain="Restart">
+    <Title>THE END</Title>
+    <Story>Don Corvo is gone. Snow covers the petals.</Story>
+</EndScreen>
+
+@code {
+    private DotNetObjectReference<GameInterop>? _reference;
+    private SettingsScreen? _settings;
+    private bool _ready;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        _reference = DotNetObjectReference.Create(Game);
+        try
+        {
+            _ready = await JS.InvokeAsync<bool>("SnowHost.initialize", _reference);
+            if (_ready && _settings is not null) await _settings.LoadSavedSettingsAsync();
+        }
+        catch (JSException)
+        {
+            // The host owns the visible startup error and retry action.
+            _ready = false;
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task Start(string difficulty)
+    {
+        if (_ready) await JS.InvokeVoidAsync("SnowGame.newGame", difficulty);
+    }
+    private async Task Pause() => await JS.InvokeVoidAsync("SnowGame.pause");
+    private async Task Resume() => await JS.InvokeVoidAsync("SnowGame.resume");
+    private async Task Restart() => await JS.InvokeVoidAsync("SnowGame.restart");
+    private async Task Menu() => await JS.InvokeVoidAsync("SnowGame.menu");
+    private async Task OpenSettings()
+    {
+        if (_ready) await JS.InvokeVoidAsync("SnowGame.openSettings");
+    }
+    private async Task CloseSettings() => await JS.InvokeVoidAsync("SnowGame.closeSettings");
+    private async Task Fullscreen() => await JS.InvokeVoidAsync("SnowGame.fullscreen");
+
+    public ValueTask DisposeAsync()
+    {
+        _reference?.Dispose();
+        return ValueTask.CompletedTask;
+    }
+}

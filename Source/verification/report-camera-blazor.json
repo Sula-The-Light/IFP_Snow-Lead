@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "name": "Real mouse capture requests raw input",
+      "status": "PASS"
+    },
+    {
+      "name": "Movement with stationary mouse does not turn camera",
+      "status": "PASS"
+    },
+    {
+      "name": "Shooting without moving does not drift camera",
+      "status": "PASS"
+    },
+    {
+      "name": "Intentional fast-turn deltas are preserved (synthetic packet)",
+      "status": "PASS",
+      "evidence": {
+        "delta": -1.1000000000000003,
+        "expected": -1.1
+      }
+    },
+    {
+      "name": "Touch compatibility mouse events are ignored",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid movement cannot corrupt camera angles",
+      "status": "PASS"
+    },
+    {
+      "name": "Shoulder crossing a wall corner does not snap camera metres",
+      "status": "PASS",
+      "evidence": 0.020000000000000018
+    },
+    {
+      "name": "Unsupported raw input falls back to ordinary real capture",
+      "status": "PASS"
+    },
+    {
+      "name": "Denied capture still permits intentional drag look",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing mouse release cannot leave drag look or fire latched",
+      "status": "PASS"
+    },
+    {
+      "name": "Pause blocks camera input",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "browser": "146.0.7680.80",
+  "result": "PASS"
+}

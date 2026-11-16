@@ -1,0 +1,11 @@
+@inherits LiveGameComponent
+
+<div id="missionReadout" class="mission-readout" aria-label="Задача и счёт">
+    <span class="mission-name">@State.Mission</span>
+    <span>СЧЁТ @State.Score · УБИЙСТВА @State.Kills</span>
+    <span>@DifficultyText · РЕКОРД @State.BestScore</span>
+</div>
+
+@code {
+    private string DifficultyText => State.Difficulty switch { "easy" => "ЛЕГКО", "hard" => "СЛОЖНО", _ => "НОРМАЛЬНО" };
+}

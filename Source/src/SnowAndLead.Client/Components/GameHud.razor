@@ -1,0 +1,17 @@
+<div id="hud">
+    <div id="cross" aria-hidden="true"></div>
+    <PlayerVitals />
+    <AmmoReadout />
+    <div id="obj"><span id="arrow" aria-hidden="true">▲</span><br /><span id="dist"></span></div>
+    <canvas id="map" width="110" height="110" aria-label="Мини-карта"></canvas>
+    <div id="boss"><div class="boss-name">DON VITTORIO CORVO</div><div class="bar"><i></i></div></div>
+    <div id="msg" role="status"></div>
+    <GameButton Id="pauseButton" Class="game-button" Label="Пауза" Title="Пауза · Esc" OnClick="OnPause"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg></GameButton>
+    <GameButton Id="fullscreenButton" Class="game-button" Label="На весь экран" Title="На весь экран" OnClick="OnFullscreen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5" /></svg></GameButton>
+    <MissionReadout />
+</div>
+
+@code {
+    [Parameter] public EventCallback OnPause { get; set; }
+    [Parameter] public EventCallback OnFullscreen { get; set; }
+}

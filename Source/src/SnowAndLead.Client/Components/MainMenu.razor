@@ -1,0 +1,40 @@
+<main class="scr" id="menu" aria-labelledby="gameTitle">
+    <div class="menu-content">
+        <h1 id="gameTitle">SNOW &amp; LEAD</h1>
+        <div class="subtitle">NIGHT DEBT <span>— a lo-fi noir shooter</span></div>
+        <p class="story" lang="en">Astana, winter, 3 a.m. Cross the open city, shoot through Corvo's robbers and mafiosi, and end the Don in his villa. The red beacon in the north-east marks it.</p>
+        <div class="difficulty-picker setting-row">
+            <label for="difficulty">Сложность</label>
+            <select id="difficulty" @bind="_difficulty">
+                <option value="easy">Легко</option>
+                <option value="normal">Нормально</option>
+                <option value="hard">Сложно</option>
+            </select>
+        </div>
+        <SessionSummary />
+        <div class="menu-actions">
+            <button id="go" type="button" disabled="@(!Ready)" @onclick="Begin">НАЧАТЬ</button>
+            <GameButton Id="settingsButton" Class="secondary" Disabled="@(!Ready)" OnClick="OnSettings">НАСТРОЙКИ</GameButton>
+        </div>
+        <div id="loadStatus" class="load-status" role="status">Подготовка города…</div>
+        <div id="loadError" class="load-error" role="alert" hidden>
+            <p>Не удалось подготовить игру.</p><p id="loadErrorText"></p>
+            <button id="loadRetry" type="button">ПОВТОРИТЬ ЗАПУСК</button>
+        </div>
+        <div class="control-guide">
+            <p class="keyboard-hints"><kbd>W A S D</kbd> движение · <kbd>Mouse</kbd> обзор · <kbd>LMB</kbd> огонь<br /><kbd>R</kbd> перезарядка · <kbd>Shift</kbd> бег · <kbd>Esc</kbd> пауза<br /><kbd>Space</kbd> / <kbd>Q</kbd> / <kbd>RMB</kbd> BULLET TIME</p>
+            <p class="touch-hints">Левый джойстик — движение.<br />Веди пальцем по FIRE — целься и стреляй.<br />Проведи справа — осмотрись без стрельбы.<br />SLOW — замедление · RELOAD — перезарядка<br />SPRINT — включить бег · сверху слева — пауза.</p>
+            <p class="survival-tip" lang="en">Pick up white painkiller boxes for health. Enemies drop ammo. Headshots hit twice as hard.</p>
+        </div>
+        <p class="landscape-hint">Поверните телефон горизонтально — так видно больше.</p>
+        <p class="sound-tip" lang="en">Turn the sound on — headphones recommended.</p>
+    </div>
+</main>
+
+@code {
+    private string _difficulty = "normal";
+    [Parameter] public bool Ready { get; set; }
+    [Parameter] public EventCallback<string> OnStart { get; set; }
+    [Parameter] public EventCallback OnSettings { get; set; }
+    private Task Begin() => OnStart.InvokeAsync(_difficulty);
+}

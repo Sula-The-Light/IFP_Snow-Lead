@@ -1,0 +1,102 @@
+{
+  "engine": "webkit",
+  "checks": [
+    {
+      "name": "Razor menu is disabled during engine initialization",
+      "status": "PASS"
+    },
+    {
+      "name": "Published Blazor WASM initializes real C# session without iframe",
+      "status": "PASS",
+      "evidence": {
+        "health": 100,
+        "ammo": 12,
+        "reserve": 48,
+        "slowEnergy": 100,
+        "slowActive": false,
+        "reloadRemaining": 0,
+        "fireCooldown": 0,
+        "kills": 0,
+        "score": 0,
+        "bestScore": 0,
+        "deaths": 0,
+        "victories": 0,
+        "phase": "menu",
+        "mission": "НАЙДИТЕ КОРВО",
+        "difficulty": "normal",
+        "missionComplete": false,
+        "distanceToBoss": 657.7613549000883
+      }
+    },
+    {
+      "name": "Razor difficulty starts the C# hard run",
+      "status": "PASS"
+    },
+    {
+      "name": "Mouse1 updates C# ammunition and Razor HUD",
+      "status": "PASS"
+    },
+    {
+      "name": "Held Mouse1 repeats; release clears fire",
+      "status": "PASS"
+    },
+    {
+      "name": "C# reload transfers reserve into magazine",
+      "status": "PASS"
+    },
+    {
+      "name": "C# difficulty applies damage and Razor renders health",
+      "status": "PASS"
+    },
+    {
+      "name": "C# slow-time energy drives the world",
+      "status": "PASS"
+    },
+    {
+      "name": "Pause freezes C# resources and the game loop",
+      "status": "PASS"
+    },
+    {
+      "name": "Razor settings validate and update native game without DOM conflict",
+      "status": "PASS"
+    },
+    {
+      "name": "C# records enemy/headshot score and kill count",
+      "status": "PASS",
+      "evidence": {
+        "expected": 200,
+        "score": 200,
+        "kills": 1
+      }
+    },
+    {
+      "name": "C# versioned best-score progress survives reload",
+      "status": "PASS"
+    },
+    {
+      "name": "Death and Razor retry reset the C# session",
+      "status": "PASS"
+    },
+    {
+      "name": "Scripted boss victory reaches end comic and C# finished state",
+      "status": "PASS"
+    },
+    {
+      "name": "Blazor phone/tablet UI fits five portrait and landscape viewports",
+      "status": "PASS"
+    },
+    {
+      "name": "WebGL failure shows retry without an unhandled Blazor startup error",
+      "status": "PASS"
+    },
+    {
+      "name": "No unhandled game/Blazor errors or missing required assets",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "missing": [],
+  "browser": "27.2",
+  "result": "PASS"
+}

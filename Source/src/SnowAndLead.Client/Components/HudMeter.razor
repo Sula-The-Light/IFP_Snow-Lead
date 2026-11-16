@@ -1,0 +1,9 @@
+<div class="bar" id="@Id" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@ClampedValue" aria-label="@Label"><i style="@FillStyle"></i></div>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = "";
+    [Parameter, EditorRequired] public string Label { get; set; } = "";
+    [Parameter] public double Value { get; set; } = 100;
+    private int ClampedValue => (int)Math.Round(Math.Clamp(Value, 0, 100));
+    private string FillStyle => $"width:{ClampedValue}%";
+}

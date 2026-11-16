@@ -1,0 +1,18 @@
+<section class="scr end-screen" id="@Id" aria-labelledby="@TitleId">
+    <div class="screen-content">
+        <h2 id="@TitleId" lang="en">@Title</h2>
+        <p lang="en">@Story</p>
+        <SessionSummary ShowCurrent="true" />
+        <GameButton Id="@ButtonId" OnClick="OnAgain">@ButtonText</GameButton>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Id { get; set; } = "";
+    [Parameter, EditorRequired] public string TitleId { get; set; } = "";
+    [Parameter, EditorRequired] public string ButtonId { get; set; } = "";
+    [Parameter] public string ButtonText { get; set; } = "";
+    [Parameter] public RenderFragment? Title { get; set; }
+    [Parameter] public RenderFragment? Story { get; set; }
+    [Parameter] public EventCallback OnAgain { get; set; }
+}

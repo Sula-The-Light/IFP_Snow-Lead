@@ -1,0 +1,30 @@
+@inherits LiveGameComponent
+
+<div class="session-summary" aria-label="Статистика">
+    @if (ShowCurrent)
+    {
+        <span>СЧЁТ @State.Score · УБИЙСТВА @State.Kills</span>
+    }
+    <span>РЕКОРД @State.BestScore · ПОБЕДЫ @State.Victories · ПОРАЖЕНИЯ @State.Deaths</span>
+</div>
+
+@code {
+    [Parameter] public bool ShowCurrent { get; set; }
+    private (int Score, int Kills, int Best, int Victories, int Deaths) _last;
+
+    protected override void OnInitialized()
+    {
+        _last = Values();
+        base.OnInitialized();
+    }
+
+    protected override bool ShouldRefresh()
+    {
+        var next = Values();
+        if (next == _last) return false;
+        _last = next;
+        return true;
+    }
+
+    private (int, int, int, int, int) Values() => (ShowCurrent ? State.Score : 0, ShowCurrent ? State.Kills : 0, State.BestScore, State.Victories, State.Deaths);
+}

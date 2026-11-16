@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/SnowAndLead.Core/SnowAndLead.Core.csproj" />
+  <Project Path="src/SnowAndLead.Client/SnowAndLead.Client.csproj" />
+  <Project Path="tests/SnowAndLead.Core.Tests/SnowAndLead.Core.Tests.csproj" />
+</Solution>

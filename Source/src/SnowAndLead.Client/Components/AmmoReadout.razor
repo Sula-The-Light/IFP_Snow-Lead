@@ -1,0 +1,12 @@
+@inherits LiveGameComponent
+
+<div id="am" aria-label="Патроны">
+    @if (State.ReloadRemaining > 0)
+    {
+        <span>ПЕРЕЗАРЯДКА…</span>
+    }
+    else
+    {
+        <span>@State.Ammo / @State.Reserve</span>
+    }
+</div>
