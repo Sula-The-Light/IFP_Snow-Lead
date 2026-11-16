@@ -1,0 +1,11 @@
+Snow & Lead — C# / Blazor WebAssembly
+Alihan Kokey · IT-2502
+
+1. Полностью распакуй архив.
+2. Запусти START_GAME.cmd. Для готовой сборки нужен Python 3.
+3. Оставь сервер открытым и играй по показанному HTTP-адресу.
+
+Не открывай Play/index.html двойным щелчком: Blazor нужен HTTP-сервер.
+Исходники C#/Razor: Source/SnowAndLead.slnx.
+Результаты: verification/RESULTS.md.
+Подготовка к защите: docs/DEFENSE_GUIDE.md.
